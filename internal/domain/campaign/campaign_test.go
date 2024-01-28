@@ -9,12 +9,15 @@ import (
 
 func TestNewCampaign(t *testing.T) {
 
-	t.Run("should create a new campaign", func(t *testing.T) {
-		name := "sell"
-		content := "content"
-		emails := []string{"user@mail.com", "user2@mail.com"}
+	var (
+		name    = "sell"
+		content = "content"
+		emails  = []string{"user@mail.com", "user2@mail.com"}
+	)
 
-		c := campaing.NewCampaign(name, content, emails)
+	t.Run("should create a new campaign", func(t *testing.T) {
+
+		c, _ := campaing.NewCampaign(name, content, emails)
 
 		assert.NotEmpty(t, c)
 		assert.NotNil(t, c.ID)
@@ -22,7 +25,17 @@ func TestNewCampaign(t *testing.T) {
 		assert.Equal(t, "content", content)
 		assert.Equal(t, len(emails), len(c.Contacts))
 		assert.NotNil(t, c.CreatedAt)
-
 	})
 
+	t.Run("should not create a new campaign be null", func(t *testing.T) {
+		c, _ := campaing.NewCampaign(name, content, emails)
+		assert.NotNil(t, c.CreatedAt)
+	})
+
+	t.Run("create a campaign name must be required", func(t *testing.T) {
+		_, err := campaing.NewCampaign("", content, emails)
+
+		assert.NotNil(t, err)
+		assert.Equal(t, "name is required", err.Error())
+	})
 }
