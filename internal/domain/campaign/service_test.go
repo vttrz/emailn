@@ -27,11 +27,12 @@ func TestNewService(t *testing.T) {
 	service := NewService(repository)
 
 	t.Run("should create a new service", func(t *testing.T) {
-		err := service.Create(command)
 
-		repository.On("Save").
+		repository.On("Save", mock.Anything).
 			Times(1).
 			Return(nil)
+
+		err := service.Create(command)
 
 		assert.Nil(t, err)
 	})

@@ -18,7 +18,13 @@ func NewService(repository Repository) *Service {
 
 func (s *Service) Create(command CommandCampaign) error {
 
-	_, err := NewCampaign(command.Name, command.Content, command.Emails)
+	campaign, err := NewCampaign(command.Name, command.Content, command.Emails)
+
+	if err != nil {
+		return err
+	}
+
+	err = s.repository.Save(campaign)
 
 	if err != nil {
 		return err
