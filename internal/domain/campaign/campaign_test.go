@@ -32,10 +32,24 @@ func TestNewCampaign(t *testing.T) {
 		assert.NotNil(t, c.CreatedAt)
 	})
 
-	t.Run("create a campaign name must be required", func(t *testing.T) {
+	t.Run("campaign name must be greater than 4", func(t *testing.T) {
 		_, err := campaing.NewCampaign("", content, emails)
 
 		assert.NotNil(t, err)
-		assert.Equal(t, "name is required", err.Error())
+		assert.Equal(t, "[Name] must have [min] value [4]", err.Error())
+	})
+
+	t.Run("campaign content must be greater than 5", func(t *testing.T) {
+		_, err := campaing.NewCampaign(name, "", []string{})
+
+		assert.NotNil(t, err)
+		assert.Equal(t, "[Content] must have [min] value [5]", err.Error())
+	})
+
+	t.Run("campaign contacts list must be greater than 1", func(t *testing.T) {
+		_, err := campaing.NewCampaign(name, content, []string{})
+
+		assert.NotNil(t, err)
+		assert.Equal(t, "[Contacts] must have [min] value [1]", err.Error())
 	})
 }

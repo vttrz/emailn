@@ -2,6 +2,8 @@ package campaing
 
 import (
 	"errors"
+	"fmt"
+	"github.com/go-playground/validator/v10"
 	"time"
 
 	"github.com/rs/xid"
@@ -13,9 +15,9 @@ type Contact struct {
 
 type Campaign struct {
 	ID        string    `validate:"required"`
-	Name      string    `validate:"min=5,max=24"`
+	Name      string    `validate:"min=4,max=24"`
 	Content   string    `validate:"min=5,max=1024"`
-	Contacts  []Contact `validate:"min=1,dive"`
+	Contacts  []Contact `validate:"min=1,max=1024"`
 	CreatedAt time.Time
 }
 
@@ -46,8 +48,14 @@ func NewCampaign(name string, content string, emails []string) (*Campaign, error
 
 func (c Campaign) validate() error {
 
-	if c.Name == "" {
-		return errors.New("name is required")
+	v := validator.New()
+	err := v.Struct(c)
+
+	if err != nil {
+		for _, e := range err.(validator.ValidationErrors) {
+			s := fmt.Sprintf("[%s] must have [%s] value [%s]", e.StructField(), e.Tag(), e.Param())
+			return errors.New(s)
+		}
 	}
 
 	return nil
