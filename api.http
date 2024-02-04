@@ -1,0 +1,13 @@
+### List campaigns
+GET http://localhost:8080/v1/campaigns
+
+
+### Create a new campaign
+POST http://localhost:8080/campaigns
+Content-Type: application/json
+
+{
+  "name": "sell",
+  "content": "content",
+  "emails": ["admin@mail.com", "user@mail.com"]
+}

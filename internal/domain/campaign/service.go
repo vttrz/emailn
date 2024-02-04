@@ -1,16 +1,20 @@
 package campaing
 
+type IService interface {
+	Create(command CommandCampaign) error
+}
+
 type Service struct {
-	repository Repository
+	repository IRepository
 }
 
 type CommandCampaign struct {
-	Name    string
-	Content string
-	Emails  []string
+	Name    string   `json:"name"`
+	Content string   `json:"content"`
+	Emails  []string `json:"emails"`
 }
 
-func NewService(repository Repository) *Service {
+func NewService(repository IRepository) *Service {
 	return &Service{
 		repository: repository,
 	}
