@@ -4,15 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/vttrz/emailn/foundation"
 	campaing "github.com/vttrz/emailn/internal/domain/campaign"
+	repository2 "github.com/vttrz/emailn/internal/infrastrucutre/repository"
 	"net/http"
 )
 
 type Handlers struct {
 	service    campaing.IService
-	repository campaing.IRepository
+	repository repository2.IRepository
 }
 
-func NewHandlers(service campaing.IService, repository campaing.IRepository) *Handlers {
+func NewHandlers(service campaing.IService, repository repository2.IRepository) *Handlers {
 	return &Handlers{
 		service:    service,
 		repository: repository,

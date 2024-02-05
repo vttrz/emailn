@@ -3,6 +3,7 @@ package campaing
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/vttrz/emailn/internal/domain"
 	"testing"
 )
 
@@ -10,7 +11,7 @@ type repositoryMock struct {
 	mock.Mock
 }
 
-func (r *repositoryMock) Save(campaign *Campaign) error {
+func (r *repositoryMock) Save(campaign *domain.Campaign) error {
 	args := r.Called(campaign)
 	return args.Error(0)
 }

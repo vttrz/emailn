@@ -1,10 +1,10 @@
-package campaing_test
+package domain_test
 
 import (
+	"github.com/vttrz/emailn/internal/domain"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/vttrz/emailn/internal/domain/campaign"
 )
 
 func TestNewCampaign(t *testing.T) {
@@ -17,7 +17,7 @@ func TestNewCampaign(t *testing.T) {
 
 	t.Run("should create a new campaign", func(t *testing.T) {
 
-		c, _ := campaing.NewCampaign(name, content, emails)
+		c, _ := domain.NewCampaign(name, content, emails)
 
 		assert.NotEmpty(t, c)
 		assert.NotNil(t, c.ID)
@@ -28,26 +28,26 @@ func TestNewCampaign(t *testing.T) {
 	})
 
 	t.Run("should not create a new campaign be null", func(t *testing.T) {
-		c, _ := campaing.NewCampaign(name, content, emails)
+		c, _ := domain.NewCampaign(name, content, emails)
 		assert.NotNil(t, c.CreatedAt)
 	})
 
 	t.Run("campaign name must be greater than 4", func(t *testing.T) {
-		_, err := campaing.NewCampaign("", content, emails)
+		_, err := domain.NewCampaign("", content, emails)
 
 		assert.NotNil(t, err)
 		assert.Equal(t, "[Name] must have [min] value [4]", err.Error())
 	})
 
 	t.Run("campaign content must be greater than 5", func(t *testing.T) {
-		_, err := campaing.NewCampaign(name, "", []string{})
+		_, err := domain.NewCampaign(name, "", []string{})
 
 		assert.NotNil(t, err)
 		assert.Equal(t, "[Content] must have [min] value [5]", err.Error())
 	})
 
 	t.Run("campaign contacts list must be greater than 1", func(t *testing.T) {
-		_, err := campaing.NewCampaign(name, content, []string{})
+		_, err := domain.NewCampaign(name, content, []string{})
 
 		assert.NotNil(t, err)
 		assert.Equal(t, "[Contacts] must have [min] value [1]", err.Error())

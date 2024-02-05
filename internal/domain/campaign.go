@@ -1,4 +1,4 @@
-package campaing
+package domain
 
 import (
 	"errors"

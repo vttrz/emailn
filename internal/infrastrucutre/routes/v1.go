@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	campaing "github.com/vttrz/emailn/internal/domain/campaign"
 	"github.com/vttrz/emailn/internal/infrastrucutre/controller"
+	"github.com/vttrz/emailn/internal/infrastrucutre/repository"
 )
 
 func Routers() {
@@ -12,7 +13,7 @@ func Routers() {
 
 	prefix := "/campaigns"
 
-	repo := campaing.NewRepository(nil)
+	repo := repository.NewRepository(nil)
 
 	s := campaing.NewService(repo)
 	h := controller.NewHandlers(s, repo)

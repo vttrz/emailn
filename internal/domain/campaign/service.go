@@ -1,11 +1,16 @@
 package campaing
 
+import (
+	"github.com/vttrz/emailn/internal/domain"
+	repository2 "github.com/vttrz/emailn/internal/infrastrucutre/repository"
+)
+
 type IService interface {
 	Create(command CommandCampaign) error
 }
 
 type Service struct {
-	repository IRepository
+	repository repository2.IRepository
 }
 
 type CommandCampaign struct {
@@ -14,7 +19,7 @@ type CommandCampaign struct {
 	Emails  []string `json:"emails"`
 }
 
-func NewService(repository IRepository) *Service {
+func NewService(repository repository2.IRepository) *Service {
 	return &Service{
 		repository: repository,
 	}
@@ -22,7 +27,7 @@ func NewService(repository IRepository) *Service {
 
 func (s *Service) Create(command CommandCampaign) error {
 
-	campaign, err := NewCampaign(command.Name, command.Content, command.Emails)
+	campaign, err := domain.NewCampaign(command.Name, command.Content, command.Emails)
 
 	if err != nil {
 		return err
