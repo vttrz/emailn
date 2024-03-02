@@ -1,30 +1,19 @@
 package routes
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	campaing "github.com/vttrz/emailn/internal/domain/campaign"
-	"github.com/vttrz/emailn/internal/infrastrucutre/controller"
-	"github.com/vttrz/emailn/internal/infrastrucutre/repository"
+	"github.com/vttrz/emailn/internal"
 )
 
-func Routers() {
-	r := gin.Default()
+func MapRoutes(router *gin.Engine, application *internal.Application) {
 
-	prefix := "/campaigns"
+	v1 := router.Group("/v1")
+	{
+		campaign := v1.Group("/campaign")
+		{
+			campaign.GET("", application.CampaignController.List)
+			campaign.POST("", application.CampaignController.Create)
 
-	repo := repository.NewRepository(nil)
-
-	s := campaing.NewService(repo)
-	h := controller.NewHandlers(s, repo)
-
-	r.POST(prefix, h.Create)
-
-	err := r.Run(":8080")
-
-	if err != nil {
-		return
+		}
 	}
-
-	fmt.Println("application running")
 }

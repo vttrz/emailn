@@ -1,4 +1,4 @@
-package campaing
+package usecase
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -11,21 +11,21 @@ type repositoryMock struct {
 	mock.Mock
 }
 
-func (r *repositoryMock) Save(campaign *domain.Campaign) error {
+func (r *repositoryMock) Save(campaign *domain.Campaign) (*domain.Campaign, error) {
 	args := r.Called(campaign)
-	return args.Error(0)
+	return nil, args.Error(0)
 }
 
-func TestNewService(t *testing.T) {
+func TestNewCreateCampaignUseCase(t *testing.T) {
 
-	command := CommandCampaign{
+	command := CreateCampaignCommand{
 		Name:    "sell",
 		Content: "content",
 		Emails:  []string{"user@mail.com"},
 	}
 
 	repository := new(repositoryMock)
-	service := NewService(repository)
+	uc := NewCreateCampaignUseCase(repository)
 
 	t.Run("should create a new service", func(t *testing.T) {
 
@@ -33,7 +33,7 @@ func TestNewService(t *testing.T) {
 			Times(1).
 			Return(nil)
 
-		err := service.Create(command)
+		_, err := uc.Execute(command)
 
 		assert.Nil(t, err)
 	})

@@ -5,19 +5,19 @@ import (
 )
 
 type IRepository interface {
-	Save(campaign *domain.Campaign) error
+	Save(campaign *domain.Campaign) (*domain.Campaign, error)
 }
 
 type Repository struct {
 	db any
 }
 
-func NewRepository(db any) *Repository {
+func NewRepository(db any) IRepository {
 	return &Repository{
 		db: db,
 	}
 }
 
-func (r Repository) Save(campaign *domain.Campaign) error {
-	return nil
+func (r Repository) Save(campaign *domain.Campaign) (*domain.Campaign, error) {
+	return nil, nil
 }
