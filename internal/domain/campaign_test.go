@@ -52,4 +52,11 @@ func TestNewCampaign(t *testing.T) {
 		assert.NotNil(t, err)
 		assert.Equal(t, "[Contacts] must have [min] value [1]", err.Error())
 	})
+
+	t.Run("campaign should be start with 'pending' status", func(t *testing.T) {
+		c, err := domain.NewCampaign(name, content, emails)
+
+		assert.Empty(t, err)
+		assert.Equal(t, domain.StatusPending, c.Status)
+	})
 }
