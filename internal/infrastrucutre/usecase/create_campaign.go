@@ -22,18 +22,18 @@ type (
 		Execute(command CreateCampaignCommand) (*CreateCampaignResponse, error)
 	}
 
-	createEggUseCase struct {
+	createCampaignUseCase struct {
 		repository repository.IRepository
 	}
 )
 
 func NewCreateCampaignUseCase(repository repository.IRepository) CreateCampaignUseCase {
-	return &createEggUseCase{
+	return &createCampaignUseCase{
 		repository: repository,
 	}
 }
 
-func (c createEggUseCase) Execute(command CreateCampaignCommand) (*CreateCampaignResponse, error) {
+func (c createCampaignUseCase) Execute(command CreateCampaignCommand) (*CreateCampaignResponse, error) {
 
 	campaign, _ := domain.NewCampaign(command.Name, command.Content, command.Emails)
 

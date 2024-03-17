@@ -8,12 +8,14 @@ import (
 )
 
 type CampaignController struct {
-	createCampaign usecase.CreateCampaignUseCase
+	createCampaign  usecase.CreateCampaignUseCase
+	getCampaignByID usecase.GetByIDCampaignUseCase
 }
 
-func NewCampaignController(createCampaign usecase.CreateCampaignUseCase) *CampaignController {
+func NewCampaignController(createCampaign usecase.CreateCampaignUseCase, getCampaignByID usecase.GetByIDCampaignUseCase) *CampaignController {
 	return &CampaignController{
-		createCampaign: createCampaign,
+		createCampaign:  createCampaign,
+		getCampaignByID: getCampaignByID,
 	}
 }
 
@@ -39,4 +41,21 @@ func (c CampaignController) Create(ctx *gin.Context) {
 
 func (c CampaignController) List(ctx *gin.Context) {
 	foundation.Success(ctx, http.StatusOK, nil)
+}
+
+func (c CampaignController) GetByID(ctx *gin.Context) {
+
+	var cmd usecase.GetCampaignByIDCommand
+
+	cmd.ID = ctx.Param("id")
+
+	response, err := c.getCampaignByID.Execute(cmd)
+
+	if err != nil {
+		foundation.AbortWithStatusError(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	foundation.Success(ctx, http.StatusOK, response)
+	return
 }

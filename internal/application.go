@@ -17,6 +17,7 @@ func NewApplication() *Application {
 	return &Application{
 		CampaignController: controller.NewCampaignController(
 			usecase.NewCreateCampaignUseCase(repo),
+			usecase.NewGetCampaignByIDUseCase(repo),
 		),
 	}
 }

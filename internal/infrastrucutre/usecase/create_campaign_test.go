@@ -11,6 +11,11 @@ type repositoryMock struct {
 	mock.Mock
 }
 
+func (r *repositoryMock) GetByID(id string) (*domain.Campaign, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (r *repositoryMock) Save(campaign *domain.Campaign) (*domain.Campaign, error) {
 	args := r.Called(campaign)
 	return nil, args.Error(0)

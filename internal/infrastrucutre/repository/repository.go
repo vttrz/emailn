@@ -6,6 +6,7 @@ import (
 
 type IRepository interface {
 	Save(campaign *domain.Campaign) (*domain.Campaign, error)
+	GetByID(id string) (*domain.Campaign, error)
 }
 
 type Repository struct {
@@ -19,5 +20,9 @@ func NewRepository(db any) IRepository {
 }
 
 func (r Repository) Save(campaign *domain.Campaign) (*domain.Campaign, error) {
+	return nil, nil
+}
+
+func (r Repository) GetByID(id string) (*domain.Campaign, error) {
 	return nil, nil
 }
