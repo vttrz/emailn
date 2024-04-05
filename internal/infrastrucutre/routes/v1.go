@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/vttrz/emailn/internal"
+	"net/http"
 )
 
 func MapRoutes(router *gin.Engine, application *internal.Application) {
@@ -17,4 +18,8 @@ func MapRoutes(router *gin.Engine, application *internal.Application) {
 
 		}
 	}
+
+	router.GET("/ping", func(context *gin.Context) {
+		context.JSON(http.StatusOK, "pong")
+	})
 }

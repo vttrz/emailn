@@ -1,0 +1,8 @@
+.idea
+.git
+/tmp
+api.http
+.gitignore
+.air.toml
+Dockerfile
+docker-compose*.yaml
